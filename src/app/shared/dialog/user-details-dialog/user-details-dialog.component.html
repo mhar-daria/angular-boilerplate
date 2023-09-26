@@ -1,0 +1,80 @@
+<div class="border-b border-gray-100">
+  <h1 mat-dialog-title class="text-2xl font-bold">User Details</h1>
+</div>
+
+<div mat-dialog-content class="px-6 py-3">
+  <ng-container *ngIf="action === 'edit' || action === 'create'">
+    <form [formGroup]="form" #userForm="ngForm" (ngSubmit)="updateForm()">
+      <mat-form-field class="w-full">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Username" formControlName="username" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Company</mat-label>
+        <input matInput placeholder="Company" formControlName="company" />
+      </mat-form-field>
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="action === 'view'">
+    <ul>
+      <li><strong>Name:</strong> {{ data.user.name }}</li>
+      <li><strong>Username:</strong> {{ data.user.username }}</li>
+      <li><strong>Email:</strong> {{ data.user.email }}</li>
+      <li><strong>Company:</strong> {{ data.user.company.name }}</li>
+      <li>
+        <strong>Address:</strong> {{ data.user.address.suite }}
+        {{ data.user.address.street }} {{ data.user.address.city }}
+      </li>
+    </ul>
+  </ng-container>
+</div>
+
+<app-spinner></app-spinner>
+<div mat-dialog-actions align="end" class="p-2 border-t border-gray-100">
+  <!-- update -->
+  <ng-container *ngIf="action === 'edit'">
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      class="px-5 py-1 mr-2 font-bold rounded focus:outline-none focus:shadow-outline focus:border-gray-600 hover:bg-gray-100 hover:text-gray-700 tracking-wider mr-2 &:last-child:mr-0">
+      Close
+    </button>
+    <button
+      mat-button
+      class="px-5 py-1 bg-yellow-500 font-bold rounded focus:outline-none focus:shadow-outline focus:border-yellow-700 hover:bg-yellow-700 hover:text-white tracking-wider mr-2 &:last-child:mr-0"
+      (click)="userForm.ngSubmit.emit()"
+      [disabled]="!form.valid">
+      Update
+    </button>
+  </ng-container>
+
+  <!-- end update -->
+  <button
+    *ngIf="action !== 'edit'"
+    mat-button
+    [mat-dialog-close]="true"
+    class="px-5 py-1 mr-2 font-bold rounded focus:outline-none focus:shadow-outline focus:border-gray-600 hover:bg-gray-100 hover:text-gray-700 tracking-wider mr-2 &:last-child:mr-0">
+    Close
+  </button>
+
+  <button
+    *ngIf="action === 'create'"
+    mat-button
+    [disabled]="!form.valid"
+    (click)="userForm.ngSubmit.emit()"
+    class="px-5 py-1 mr-2 font-bold text-white rounded focus:outline-none bg-orange-500 focus:shadow-outline focus:border-orange-600 hover:bg-orange-100 hover:text-orange-700 tracking-wider mr-2 &:last-child:mr-0">
+    Submit
+  </button>
+</div>

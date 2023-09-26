@@ -1,0 +1,87 @@
+<div class="container mx-auto">
+  <h1 class="text-2xl font-medium">Users</h1>
+
+  <div class="pt-3 my-6 mat-elevation-z8">
+    <div class="flex justify-end">
+      <button (click)="handleActionEvent(null, 'create')">
+        <span
+          class="cursor-pointer text-gray-700 mr-2 &:last-child:mr-0 hover:text-gray-500 inline-block">
+          <mat-icon aria-label="Create User" class="text-4xl w-auto h-auto"
+            >add</mat-icon
+          >
+        </span>
+      </button>
+    </div>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="min-w-max w-full table-fixed"
+      matSort
+      matSortActive="name"
+      matSortDisableClear
+      matSortDirection="desc"
+      aria-label="List of Users"
+      class="bg-white shadow-md rounded">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-bold">
+          Full name
+        </th>
+        <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-bold">
+          Username
+        </th>
+        <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-bold">
+          Email
+        </th>
+        <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="font-bold">Actions</th>
+        <td mat-cell *matCellDef="let user" class="text-right">
+          <a
+            class="cursor-pointer text-gray-700 mr-2 &:last-child:mr-0 hover:text-gray-500 inline-block"
+            (click)="handleActionEvent(user)">
+            <mat-icon aria-label="View User Details">visibility</mat-icon>
+          </a>
+
+          <a
+            class="cursor-pointer text-gray-700 mr-2 &:last-child:mr-0 hover:text-gray-500 inline-block"
+            (click)="handleActionEvent(user, 'edit')">
+            <mat-icon aria-label="Edit User Details">edit</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="columns"
+        class="bg-gray-200 text-gray-600 capitalize text-sm leading-normal"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: columns; let i = index"
+        class="border-b border-gray-200 hover:bg-gray-50"
+        [class.bg-gray-100]="i % 2"></tr>
+    </table>
+    <ng-container *ngIf="loadingUsers" class="py-5">
+      <mat-progress-spinner
+        mode="indeterminate"
+        class="mx-auto"
+        aria-label="Fetching users"
+        #paginator></mat-progress-spinner>
+    </ng-container>
+    <mat-paginator
+      class="px-5 py-5 bg-white flex flex-col xs:flex-row-center xs:justify-between"
+      [pageSize]="meta.perPage"
+      [length]="meta.total"
+      [pageSizeOptions]="[5, 10, 20, 30]"
+      showFirstLastButtons></mat-paginator>
+  </div>
+</div>

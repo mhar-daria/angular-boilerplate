@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #ef4444;
+}
+
+.custom-dialog > mat-dialog-container {
+  padding: 2em;
+}
+
+.mdc-notched-outline__notch {
+  border-right: none !important;
+}

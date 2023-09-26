@@ -1,0 +1,35 @@
+{
+    "semi": false,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "overrides": [
+        {
+            "files": [
+                "*.ts",
+                "*.js"
+            ],
+            "options": {
+                "tabWith": 2,
+                "arrowParens": "always",
+                "printWidth": 80,
+                "singleQuote": true,
+                "trailingComma": "es5"
+            }
+        },
+        {
+            "files": "*.html",
+            "options": {
+                "jsxBracketSameLine": false,
+                "bracketSameLine": true,
+                "tabWidth": 2,
+                "useTabs": false
+            }
+        },
+        {
+            "files": "*.json",
+            "options": {
+                "singleQuote": false
+            }
+        }
+    ]
+}

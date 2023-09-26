@@ -1,0 +1,55 @@
+<header class="bg-gray-800 fixed w-full top-0">
+  <div class="mx-auto px-2sm:px-6 lg:px-8">
+    <div class="relative flex items-center justify-between h-16">
+      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden"></div>
+      <div
+        class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start text-white">
+        <div class="flex-shrink-0 flex items-center">
+          <h1 class="font-medium">Doodatees</h1>
+
+          <div class="hidden sm:block sm:ml-6 absolute right-0">
+            <div class="flex space-x-4">
+              <a
+                routerLink="/users"
+                class="text-gray-300 hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                routerLinkActive="bg-gray-950 rounded-md">
+                Users
+              </a>
+              <a
+                routerLink="/crisis-center"
+                class="text-gray-300 hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                aria-current="page"
+                routerLinkActive="bg-gray-950 rounded-md">
+                Crisis Center
+              </a>
+              <a
+                routerLink="/heroes"
+                class="text-gray-300 hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                routerLinkActive="bg-gray-950 rounded-md">
+                Heroes
+              </a>
+              <a
+                *ngIf="!isLoggedIn"
+                routerLink="/login"
+                class="text-gray-300 hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                routerLinkActive="bg-gray-950 rounded-md">
+                Login
+              </a>
+              <a
+                *ngIf="isLoggedIn"
+                routerLink="/admin"
+                class="text-gray-300 hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                routerLinkActive="bg-gray-950 rounded-md">
+                Admin
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container mx-auto mt-18">
+  <router-outlet></router-outlet>
+</div>
