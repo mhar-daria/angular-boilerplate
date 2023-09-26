@@ -11,12 +11,13 @@ import { AuthService } from '../services/auth.service';
 export class LayoutComponent implements OnInit {
 
   constructor(private storageService: LocalstorageService, private router: Router, private authService: AuthService) {
-    this.isLoggedIn = this.storageService.check('token')
-    console.log(this.isLoggedIn)
+    this.isLoggedIn = authService.isSignIn()
+    if (!this.isLoggedIn) {
+      authService.logout()
+    }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   isLoggedIn: boolean = false
 }
