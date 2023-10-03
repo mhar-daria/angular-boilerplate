@@ -7,6 +7,8 @@ import { isEmpty } from 'lodash'
 import { LoginOutputType } from 'src/app/types/auth'
 import { LocalstorageService } from 'src/app/localstorage.service'
 import { Router } from '@angular/router'
+import { Store } from '@ngrx/store'
+import { Login } from 'src/ngrx/actions/auth.actions'
 
 @Component({
   selector: 'app-login-form',
@@ -20,7 +22,8 @@ export class LoginFormComponent {
     private authService: AuthService,
     private formService: FormService,
     private storageService: LocalstorageService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {
     if (this.storageService.check('token') && !this.storageService.expired('token_expiration')) {
       this.router.navigate(['/admin'])
@@ -57,6 +60,8 @@ export class LoginFormComponent {
       tkid,
       password: hashed,
     }
+
+    // this.store.dispatch(new Login(payload))
 
     this.authService.login(payload).subscribe(({ token = '', expiration = '' }) => {
       this.onSuccess(token, expiration)

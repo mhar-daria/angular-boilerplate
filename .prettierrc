@@ -2,6 +2,7 @@
     "semi": false,
     "trailingComma": "all",
     "singleQuote": true,
+    "tabWidth": 2,
     "overrides": [
         {
             "files": [
@@ -11,6 +12,7 @@
             "options": {
                 "tabWith": 2,
                 "arrowParens": "always",
+                "useTabs": false,
                 "printWidth": 80,
                 "singleQuote": true,
                 "trailingComma": "es5"

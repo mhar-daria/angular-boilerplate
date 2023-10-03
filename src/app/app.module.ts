@@ -25,6 +25,7 @@ import { LoginFormComponent } from './forms/login-form/login-form.component'
 import { HttpClientInterceptor } from './interceptors/http-client.interceptor';
 import { LoadingComponent } from './common/loading/loading.component';
 import { AdminLayoutComponent } from './layout/admin/admin-layout.component'
+import { StoreModule } from '@ngrx/store'
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { AdminLayoutComponent } from './layout/admin/admin-layout.component'
     AppRoutingModule,
     MatIconModule,
     DialogModule,
+    StoreModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
