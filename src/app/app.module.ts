@@ -26,6 +26,9 @@ import { HttpClientInterceptor } from './interceptors/http-client.interceptor';
 import { LoadingComponent } from './common/loading/loading.component';
 import { AdminLayoutComponent } from './layout/admin/admin-layout.component'
 import { StoreModule } from '@ngrx/store'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { environment } from 'src/environments/environment'
+import * as Reducers from 'src/app/ngrx/reducers'
 
 @NgModule({
   declarations: [
@@ -51,7 +54,13 @@ import { StoreModule } from '@ngrx/store'
     AppRoutingModule,
     MatIconModule,
     DialogModule,
-    StoreModule.forRoot(),
+    StoreModule.forRoot({
+      auth: Reducers.default.auth
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

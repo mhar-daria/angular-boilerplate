@@ -8,7 +8,7 @@ import { LoginOutputType } from 'src/app/types/auth'
 import { LocalstorageService } from 'src/app/localstorage.service'
 import { Router } from '@angular/router'
 import { Store } from '@ngrx/store'
-import { Login } from 'src/ngrx/actions/auth.actions'
+import { Login } from 'src/app/ngrx/actions/auth.actions'
 
 @Component({
   selector: 'app-login-form',
