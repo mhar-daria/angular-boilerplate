@@ -14,16 +14,16 @@
         matInput
         placeholder="Email"
         autofocus />
-      <mat-error *ngIf="form.get('email').errors?.required === true"
+      <mat-error *ngIf="form.get('email').errors['required'] === true"
         >Field is required.</mat-error
       >
-      <mat-error *ngIf="form.get('email').errors?.email === true"
+      <mat-error *ngIf="form.get('email').errors['email'] === true"
         >Username should be a valid email.</mat-error
       >
       <mat-error
         *ngIf="
-          form.get('email').errors?.custom !== null ||
-          form.get('email').errors?.custom !== undefined
+          form.get('email').errors['custom'] !== null ||
+          form.get('email').errors['custom'] !== undefined
         ">
         {{ form.get('email').errors?.custom?.join(', ') }}
       </mat-error>
@@ -48,7 +48,7 @@
           showPassword ? 'visibility_off' : 'visibility'
         }}</mat-icon>
       </button>
-      <mat-error *ngIf="form.get('password').errors?.required === true"
+      <mat-error *ngIf="form.get('password').errors['required'] === true"
         >Field is required.</mat-error
       >
     </mat-form-field>

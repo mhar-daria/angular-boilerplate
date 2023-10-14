@@ -1,4 +1,4 @@
-import { Action, createAction } from '@ngrx/store'
+import { Action } from '@ngrx/store'
 
 interface LoginPayload {
   username: string
