@@ -1,4 +1,4 @@
-import * as Auth from './auth.actions'
+import * as Auth from './auth.action'
 
 export default {
   Auth,

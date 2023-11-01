@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { Login } from 'src/app/ngrx/actions/auth.actions';
-import { AuthState } from 'src/app/ngrx/reducers/auth.reducer';
-
+import { Login } from 'src/app/ngrx/actions/auth.action';
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
@@ -21,8 +19,9 @@ export class AdminLayoutComponent {
   }
 
   dispatch() {
-    this.store.dispatch(new Login(true))
+    //   this.store.dispatch(new Login(true))
   }
+
   logout(): void {
     this.authService.logout()
     this.router.navigate(['/login'])

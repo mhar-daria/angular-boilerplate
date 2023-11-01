@@ -19,16 +19,29 @@ import { UserDetailsDialogComponent } from './shared/dialog/user-details-dialog/
 import { DialogModule } from './modules/dialog.module'
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
 import { CommonModule, NgIf } from '@angular/common'
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
-import { LoginComponent } from './pages/login/login.component';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar'
+import { LoginComponent } from './pages/login/login.component'
 import { LoginFormComponent } from './forms/login-form/login-form.component'
-import { HttpClientInterceptor } from './interceptors/http-client.interceptor';
-import { LoadingComponent } from './common/loading/loading.component';
+import { HttpClientInterceptor } from './interceptors/http-client.interceptor'
+import { LoadingComponent } from './common/loading/loading.component'
 import { AdminLayoutComponent } from './layout/admin/admin-layout.component'
-import { StoreModule } from '@ngrx/store'
+import {
+  META_REDUCERS,
+  StoreModule,
+  USER_PROVIDED_META_REDUCERS,
+} from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from 'src/environments/environment'
 import * as Reducers from 'src/app/ngrx/reducers'
+import { EffectsModule } from '@ngrx/effects'
+import { AuthEffects } from './ngrx/effects/auth.effects'
+import {
+  LOCAL_STORAGE_KEY,
+  LOCAL_STORAGE_PERSISTENT_KEYS,
+} from './injections/reducer.tokens'
+import { getMetaReducers } from './ngrx/hor/storage'
+import { LocalStorageService } from './localstorage.service'
+// import { storageMetaReducer } from './ngrx/hor/storage'
 
 @NgModule({
   declarations: [
@@ -55,12 +68,13 @@ import * as Reducers from 'src/app/ngrx/reducers'
     MatIconModule,
     DialogModule,
     StoreModule.forRoot({
-      auth: Reducers.default.auth
+      auth: Reducers.default.auth,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
+    EffectsModule.forRoot(AuthEffects),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
@@ -69,6 +83,24 @@ import * as Reducers from 'src/app/ngrx/reducers'
     }),
   ],
   providers: [
+    {
+      provide: LOCAL_STORAGE_KEY,
+      useValue: '__doodatees__',
+    },
+    {
+      provide: LOCAL_STORAGE_PERSISTENT_KEYS,
+      useValue: ['auth'],
+    },
+    {
+      provide: USER_PROVIDED_META_REDUCERS,
+      // useValue: [getMetaReducers]
+      useFactory: getMetaReducers,
+      deps: [
+        LOCAL_STORAGE_KEY,
+        LOCAL_STORAGE_PERSISTENT_KEYS,
+        LocalStorageService,
+      ],
+    },
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
@@ -83,8 +115,8 @@ import * as Reducers from 'src/app/ngrx/reducers'
       provide: HTTP_INTERCEPTORS,
       useClass: HttpClientInterceptor,
       multi: true,
-    }
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

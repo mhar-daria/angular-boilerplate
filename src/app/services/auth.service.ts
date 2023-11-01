@@ -6,7 +6,7 @@ import { Observable } from 'rxjs'
 import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { HttpOptions } from '../types/http';
-import { LocalstorageService } from '../localstorage.service';
+import { LocalStorageService } from '../localstorage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AuthService {
 
   private url: string
 
-  constructor(private commonService: CommonService, private http: HttpClient, private storageService: LocalstorageService) {
+  constructor(private commonService: CommonService, private http: HttpClient, private storageService: LocalStorageService) {
     this.url = `${environment.apiBaseUrl}`
   }
 

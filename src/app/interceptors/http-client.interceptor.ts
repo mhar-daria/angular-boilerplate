@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { HttpEvent, HttpHandler, HttpHandlerFn, HttpHeaders, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { LocalstorageService } from '../localstorage.service';
+import { LocalStorageService } from '../localstorage.service';
 
 @Injectable()
 export class HttpClientInterceptor implements HttpInterceptor {
 
-    constructor(private storageService: LocalstorageService) { }
+    constructor(private storageService: LocalStorageService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!this.storageService.check('token')) {

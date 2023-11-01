@@ -5,10 +5,13 @@ import { AuthService } from 'src/app/services/auth.service'
 import { FormService } from 'src/app/services/form.service'
 import { isEmpty } from 'lodash'
 import { LoginOutputType } from 'src/app/types/auth'
-import { LocalstorageService } from 'src/app/localstorage.service'
+import { LocalStorageService } from 'src/app/localstorage.service'
 import { Router } from '@angular/router'
-import { Store } from '@ngrx/store'
-import { Login } from 'src/app/ngrx/actions/auth.actions'
+import { Store, select } from '@ngrx/store'
+import { Login } from 'src/app/ngrx/actions/auth.action'
+import { Observable } from 'rxjs'
+import { selectData, selectLoading } from 'src/app/ngrx/reducers/auth.reducer'
+import { get } from 'lodash'
 
 @Component({
   selector: 'app-login-form',
@@ -21,17 +24,26 @@ export class LoginFormComponent {
   constructor(
     private authService: AuthService,
     private formService: FormService,
-    private storageService: LocalstorageService,
+    private storageService: LocalStorageService,
     private router: Router,
-    private store: Store
+    private store: Store,
   ) {
-    if (this.storageService.check('token') && !this.storageService.expired('token_expiration')) {
+    if (
+      this.storageService.check('token') &&
+      !this.storageService.expired('token_expiration')
+    ) {
       this.router.navigate(['/admin'])
     } else {
       this.storageService.remove('token')
       this.storageService.remove('token_expiration')
     }
+
+    this.loading$ = this.store.pipe(select(selectLoading))
+    this.data$ = this.store.pipe(select(selectData))
   }
+
+  loading$: Observable<boolean>
+  data$: Observable<LoginOutputType | null>
 
   get loading() {
     return this.authService.loading
@@ -50,22 +62,20 @@ export class LoginFormComponent {
 
   requestError: string = ''
 
-  submitPost(): void {
+  login(): void {
     if (this.form.invalid === true || this.loading === true) return
 
-    this.loading = true
-    const { tkid, hashed } = this.authService.hash(this.form.get('password').value)
+    // this.loading = true
+    const { tkid, hashed } = this.authService.hash(
+      this.form.get('password').value,
+    )
     const payload = {
       ...this.form.value,
       tkid,
       password: hashed,
     }
 
-    // this.store.dispatch(new Login(payload))
-
-    this.authService.login(payload).subscribe(({ token = '', expiration = '' }) => {
-      this.onSuccess(token, expiration)
-    }, this.errorHandler.bind(this))
+    this.store.dispatch(new Login(payload))
   }
 
   private onSuccess(token: string, expiration: string): void {
@@ -83,11 +93,16 @@ export class LoginFormComponent {
     this.loading = false
     this.requestError = errorMessage
     if (error.status === 400) {
-      const validationErrors: { [key: string]: Array<string> } = error.error?.errors || {}
+      const validationErrors: { [key: string]: Array<string> } =
+        error.error?.errors || {}
 
       if (!isEmpty(validationErrors)) {
         this.formService.setErrors(this.form, validationErrors)
       }
     }
+  }
+
+  getErrors(form: FormGroup, key: string): any {
+    return form.get(key).errors
   }
 }

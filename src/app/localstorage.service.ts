@@ -4,7 +4,7 @@ import * as moment from 'moment';
 @Injectable({
   providedIn: 'root'
 })
-export class LocalstorageService {
+export class LocalStorageService {
 
   constructor() { }
 

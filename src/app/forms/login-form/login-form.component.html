@@ -5,7 +5,7 @@
     requestError
   }}</mat-error>
 
-  <form [formGroup]="form" class="w-full mt-5" (submit)="submitPost()">
+  <form [formGroup]="form" class="w-full mt-5" (submit)="login()">
     <mat-form-field class="w-full">
       <mat-label>Email:</mat-label>
       <input
@@ -14,18 +14,18 @@
         matInput
         placeholder="Email"
         autofocus />
-      <mat-error *ngIf="form.get('email').errors['required'] === true"
+      <mat-error *ngIf="getErrors(form, 'email')?.required === true"
         >Field is required.</mat-error
       >
-      <mat-error *ngIf="form.get('email').errors['email'] === true"
-        >Username should be a valid email.</mat-error
+      <mat-error *ngIf="getErrors(form, 'email')?.emeail === true"
+        >Email should be a valid email.</mat-error
       >
       <mat-error
         *ngIf="
-          form.get('email').errors['custom'] !== null ||
-          form.get('email').errors['custom'] !== undefined
+          getErrors(form, 'email')?.custom !== null ||
+          getErrors(form, 'email')?.custom !== undefined
         ">
-        {{ form.get('email').errors?.custom?.join(', ') }}
+        {{ getErrors(form, 'email')?.custom?.join(', ') }}
       </mat-error>
     </mat-form-field>
     <mat-form-field class="w-full">
@@ -34,7 +34,7 @@
         [type]="showPassword ? 'text' : 'password'"
         formControlName="password"
         matInput
-        placeholder="Username"
+        placeholder="Password"
         [disabled]="loading"
         autocomplete="off" />
       <button
@@ -48,13 +48,15 @@
           showPassword ? 'visibility_off' : 'visibility'
         }}</mat-icon>
       </button>
-      <mat-error *ngIf="form.get('password').errors['required'] === true"
+      <mat-error *ngIf="getErrors(form, 'password')?.required === true"
         >Field is required.</mat-error
       >
     </mat-form-field>
 
     <div class="flex justify-center">
       <app-loading [show]="loading"></app-loading>
+      <pre>{{ loading$ | async }}</pre>
+      <pre>{{ data$ | async }}</pre>
     </div>
 
     <div class="text-right">
