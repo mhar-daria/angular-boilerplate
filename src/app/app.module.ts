@@ -67,9 +67,7 @@ import { LocalStorageService } from './localstorage.service'
     AppRoutingModule,
     MatIconModule,
     DialogModule,
-    StoreModule.forRoot({
-      auth: Reducers.default.auth,
-    }),
+    StoreModule.forRoot(Reducers.default),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
@@ -89,7 +87,7 @@ import { LocalStorageService } from './localstorage.service'
     },
     {
       provide: LOCAL_STORAGE_PERSISTENT_KEYS,
-      useValue: ['auth'],
+      useValue: ['auth', 'theme'],
     },
     {
       provide: USER_PROVIDED_META_REDUCERS,

@@ -28,4 +28,5 @@ module.exports = {
   ],
   minify: false,
   content: ['./src/**/*.{html,ts}'],
+  darkMode: 'class',
 }

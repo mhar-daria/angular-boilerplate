@@ -15,10 +15,10 @@ export function storageMetaReducer<S, A extends Action = Action>(
       if (onInit) {
         onInit = false
         const savedState = JSON.parse(storageService.get(storeKey))
-        console.log(merge(nextState, savedState))
+        console.log('oninit', merge(nextState, savedState))
         return merge(nextState, savedState)
       }
-
+      console.log(nextState, reducerKeys)
       const stateToSave = pick(nextState, reducerKeys)
       storageService.set(storeKey, JSON.stringify(stateToSave))
 

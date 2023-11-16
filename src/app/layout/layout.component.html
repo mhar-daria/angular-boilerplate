@@ -1,4 +1,4 @@
-<header class="bg-gray-800 fixed w-full top-0">
+<header class="bg-white fixed w-full top-0 dark:bg-slate-800">
   <div class="mx-auto px-2sm:px-6 lg:px-8">
     <div class="relative flex items-center justify-between h-16">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden"></div>
@@ -9,6 +9,12 @@
 
           <div class="hidden sm:block sm:ml-6 absolute right-0">
             <div class="flex space-x-4">
+              <a
+                routerLink="/"
+                class="text-gray-300 hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                routerLinkActive="bg-gray-950 rounded-md">
+                Home
+              </a>
               <a
                 routerLink="/users"
                 class="text-gray-300 hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -41,6 +47,11 @@
                 class="text-gray-300 hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 routerLinkActive="bg-gray-950 rounded-md">
                 Admin
+              </a>
+              <a
+                (click)="toggleTheme()"
+                class="text-gray-300 hover:bg-gray-900 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                {{ theme | titlecase }}
               </a>
             </div>
           </div>

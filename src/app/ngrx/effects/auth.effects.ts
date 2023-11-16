@@ -6,7 +6,7 @@ import {
   LoginPayload,
   LoginSuccess,
 } from '../actions/auth.action'
-import { exhaustMap, EMPTY, mergeMap, catchError, map } from 'rxjs'
+import { EMPTY, mergeMap, catchError, map } from 'rxjs'
 import { AuthService } from 'src/app/services/auth.service'
 import { LoginOutputType } from 'src/app/types/auth'
 import { HttpErrorResponse } from '@angular/common/http'
